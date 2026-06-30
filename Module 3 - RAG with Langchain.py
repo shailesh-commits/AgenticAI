@@ -15,11 +15,11 @@ from langchain_core.runnables import RunnablePassthrough
 
 # Paste your credentials from Microsoft Entra admin center
 
-CLIENT_ID = "bbbce114-dd92-480e-96a6-8397d5f437a5"
+CLIENT_ID = ""
 TENANT_ID = "xoriant"  # Use "common" for personal & work accounts
 AUTHORITY = f"https://login.microsoftonline.com/xoriota.onmicrosoft.com"
 
-CLIENT_SECRET = "d798Q~0WTI6381e3bfoGWdtGmzvL~xcav4szobpf"
+CLIENT_SECRET = ""
 # Use your tenant domain or the 36-character Tenant ID GUID
 # Application permissions require the '.default' scope
 SCOPES = ["https://graph.microsoft.com/.default"]
