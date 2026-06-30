@@ -1,0 +1,160 @@
+# WAM Agentic Platform (Capstone Project)
+
+A multi-agent **Wealth and Asset Management (WAM)** intelligence platform built with **LangGraph**, demonstrating an end-to-end agentic workflow for a Relationship Manager (RM) at a wealth management firm: sourcing market-moving leads, generating HNI-client investment suggestions, and producing portfolio diversification/rebalancing reports — all orchestrated through a stateful, event-driven multi-agent graph.
+
+This is the capstone project for the Technology Reboot Agentic AI training, combining everything covered in earlier modules (structured outputs, memory, tool use, RAG/retrieval, guardrails) into a single production-style application.
+
+## Architecture
+
+Three specialized agents are coordinated by a central **LangGraph orchestrator**, communicating through a shared state object rather than calling each other directly (loose coupling):
+
+```
+START
+  └─► Agent 1: Lead Sourcer
+        ├─(LEAD_FEED_READY)─► Agent 2: Portfolio Suggester
+        │                          ├─(SUGGESTION_READY)─► Agent 3: Portfolio Diversifier
+        │                          │                           └─► Conflict Resolver ─► END
+        │                          └─(ERROR)─► END
+        └─(ERROR)─► END
+```
+
+**Agent 1 — Lead Sourcer**
+Scrapes MoneyControl and Google News (or uses mock fixtures), deduplicates articles seen within the last 48 hours, scores each one on recency/entity frequency/sentiment, and extracts structured `LeadSignal` records for a configurable NSE ticker watchlist.
+
+**Agent 2 — Portfolio Suggester**
+Consumes the lead feed, enriches it with mock market data (sector momentum, P/E, 52-week range), applies HNI investment filters (₹50L+ minimum ticket, client risk grade, SEBI instrument categories), and uses an LLM reasoning chain to generate the top 5 investment suggestions per client — each with instrument, rationale, horizon, risk, confidence score, and explainability fields (prompt ID, model version, reasoning trace).
+
+**Agent 3 — Portfolio Diversifier**
+Ingests each client's current portfolio holdings, computes concentration metrics (sector weight, asset-class weight, single-stock exposure, geographic exposure), checks them against policy thresholds, and proposes add/reduce/hold rebalancing actions with target weight deltas and an estimated Sharpe-ratio improvement.
+
+**Conflict Resolver**
+A final graph node that strips out any Agent 2 suggestions that directly contradict an Agent 3 "reduce" action, so the RM never receives conflicting advice for the same instrument.
+
+The graph is checkpointed via LangGraph's SQLite saver, so each "cycle" (one full run through all agents) is resumable and auditable.
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Agent orchestration | LangGraph (`StateGraph`), LangChain |
+| LLM | OpenAI (`gpt-4o`, configurable) |
+| API layer | FastAPI + Uvicorn |
+| Scheduling | APScheduler (background intelligence cycles) |
+| State persistence | SQLite (default) — pluggable to Redis or PostgreSQL |
+| Scraping | BeautifulSoup4, lxml, httpx, feedparser, Playwright |
+| Observability (optional) | Langfuse, OpenTelemetry/OTLP, Prometheus, Grafana |
+| Containerization | Docker, docker-compose |
+
+## Project Structure
+
+```
+Capstone/
+├── main.py                      # Entry point — run the API server or a single cycle
+├── orchestrator/
+│   ├── graph.py                 # LangGraph definition: nodes, routing, checkpointing
+│   ├── state.py                 # Shared OrchestratorState + typed records (LeadSignal, etc.)
+│   └── state_store.py           # Persistence layer for leads/suggestions/reports
+├── agents/
+│   ├── lead_sourcer.py          # Agent 1
+│   ├── lead_sourcer_llm.py      # LLM-assisted variant of Agent 1
+│   ├── portfolio_suggester.py   # Agent 2
+│   └── portfolio_diversifier.py # Agent 3
+├── scrapers/
+│   ├── moneycontrol.py          # MoneyControl news/markets scraper
+│   └── google_news.py           # Google News RSS fetcher
+├── api/
+│   └── main.py                  # FastAPI app + REST endpoints (RM Workbench integration)
+├── scheduler/
+│   └── scheduler.py             # Background job that triggers cycles on an interval
+├── config/
+│   ├── config.yaml               # App, LLM, scheduler, scraping, thresholds, watchlist
+│   └── selectors.yaml             # CSS/HTML selectors used by the scrapers
+├── data/
+│   ├── mock_leads.json           # Mock lead-feed fixtures
+│   ├── mock_market_data.json     # Mock market-data fixtures
+│   └── mock_portfolios.json      # Mock client profiles + portfolio holdings
+├── Dockerfile
+├── docker-compose.yml             # App + Redis (+ optional Prometheus/Grafana profile)
+├── requirements.txt
+└── .env.example
+```
+
+## REST API
+
+Once running, the platform exposes a REST API intended for integration into an RM's workbench/dashboard:
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/health` | Service health check |
+| `GET` | `/leads` | Latest lead feed (optionally `?cycle_id=`) |
+| `GET` | `/suggestions/{client_id}` | Investment suggestions for a specific client |
+| `GET` | `/diversification/{client_id}` | Diversification/rebalancing report for a client |
+| `POST` | `/run-cycle` | Trigger an on-demand intelligence cycle |
+| `GET` | `/clients` | List all known client IDs |
+
+## Configuration
+
+All behavior is driven by `config/config.yaml`, including:
+
+- **Scheduler** — interval between automated intelligence cycles (default: every 5 hours)
+- **LLM** — provider, model, temperature, and a `mock_mode` flag to bypass real API calls (useful for CI or no-key environments)
+- **State store** — `sqlite` (default), `redis`, or `postgresql`
+- **Scraping** — `mock_mode` toggle (defaults to mock data instead of live scraping), timeouts, retries
+- **Watchlist** — the NSE tickers tracked (e.g. RELIANCE, TCS, HDFCBANK, INFY, ICICIBANK…)
+- **Portfolio Suggester** — top-N suggestion count, HNI minimum ticket size, risk grades, instrument categories
+- **Portfolio Diversifier** — concentration thresholds and per-risk-profile equity/debt/alternatives limits
+- **Observability** — optional Langfuse and OpenTelemetry/Prometheus toggles
+
+## Setup
+
+```bash
+cd Capstone
+python -m venv venv
+source venv/bin/activate   # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+cp .env.example .env       # then fill in OPENAI_API_KEY (and optional keys)
+```
+
+`requirements.txt` also installs Playwright; if you plan to run live scraping (`scraping.mock_mode: false` in `config.yaml`), install the browser binaries:
+
+```bash
+playwright install chromium
+```
+
+## Usage
+
+**Run a single intelligence cycle and print a summary:**
+
+```bash
+python main.py --run-once
+```
+
+**Start the API server with the background scheduler (default):**
+
+```bash
+python main.py
+```
+
+**Start the API server without the background scheduler:**
+
+```bash
+python main.py --no-scheduler
+```
+
+The API will be available at `http://localhost:8000` (interactive docs at `/docs`).
+
+## Running with Docker
+
+```bash
+docker-compose up --build
+```
+
+This starts the platform alongside a Redis container. To also bring up the optional observability stack (Prometheus + Grafana):
+
+```bash
+docker-compose --profile observability up --build
+```
+
+## Mock Data Mode
+
+By default, both scraping (`scraping.mock_mode`) and LLM calls (`llm.mock_mode`) can be toggled in `config.yaml`. The `data/` folder ships with mock leads, mock market data, and mock client portfolios, so the full pipeline can be exercised end-to-end without any external API keys or live scraping — useful for demos, CI, and learning the orchestration flow before wiring in real data sources.
