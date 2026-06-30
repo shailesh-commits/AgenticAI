@@ -1,0 +1,24 @@
+# CSS / XPath selectors for MoneyControl scraping.
+# Externalised so site structure changes require only config updates, not code changes.
+
+moneycontrol:
+  news_list:
+    container: "li.clearfix"
+    headline: "h2 a, p.arial11 a"
+    url: "h2 a[href], p.arial11 a[href]"
+    timestamp: "span.ago"
+  market_movers:
+    gainers_table: "table.bsr_table"
+    row: "tr.gre, tr.red"
+    ticker_cell: "td:nth-child(1)"
+    change_cell: "td:nth-child(5)"
+  analyst_reports:
+    container: "div.FL.gry10"
+    headline: "a.arial11_dgrey"
+    url: "a.arial11_dgrey[href]"
+    source: "span.gry10"
+
+# Fallback XPath selectors (used if CSS selector yields no results)
+moneycontrol_xpath:
+  news_headline: "//h2[@class='clearfix']/a"
+  news_url: "//h2[@class='clearfix']/a/@href"

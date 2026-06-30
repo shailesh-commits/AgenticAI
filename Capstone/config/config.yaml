@@ -1,0 +1,116 @@
+app:
+  name: WAM-Agentic-Platform
+  version: "1.0.0"
+  env: development
+  log_level: INFO
+
+# ── Scheduler ────────────────────────────────────────────────────────────────
+scheduler:
+  interval_hours: 5          # configurable per spec
+  max_instances: 1
+  misfire_grace_seconds: 120
+
+# ── LLM ──────────────────────────────────────────────────────────────────────
+llm:
+  provider: openai
+  model: gpt-4o
+  temperature: 0.1
+  max_tokens: 4096
+  mock_mode: false            # set true to bypass OpenAI API calls in CI / no-key environments
+
+# ── State persistence ─────────────────────────────────────────────────────────
+state_store:
+  backend: sqlite             # sqlite | redis | postgresql
+  sqlite_path: ./data/state.db
+  redis_url: redis://localhost:6379/0
+  postgresql_url: ""
+
+# ── Scraping ──────────────────────────────────────────────────────────────────
+scraping:
+  mock_mode: true             # use mock data; set false for live scraping
+  timeout_seconds: 30
+  retry_attempts: 3
+  moneycontrol:
+    base_url: "https://www.moneycontrol.com"
+    news_path: "/news/business/markets"
+    markets_path: "/markets/indian-indices"
+  google_news:
+    rss_template: "https://news.google.com/rss/search?q={query}&hl=en-IN&gl=IN&ceid=IN:en"
+    max_articles_per_ticker: 5
+
+# ── Ticker watchlist ──────────────────────────────────────────────────────────
+watchlist:
+  tickers:
+    - RELIANCE
+    - TCS
+    - HDFCBANK
+    - INFY
+    - ICICIBANK
+    - WIPRO
+    - BAJFINANCE
+    - AXISBANK
+    - TITAN
+    - NESTLEIND
+    - SUNPHARMA
+    - KOTAKBANK
+    - HINDUNILVR
+    - MARUTI
+    - LT
+
+# ── Lead Sourcer ──────────────────────────────────────────────────────────────
+lead_sourcer:
+  deduplication_window_hours: 48
+  max_leads_per_cycle: 50
+  min_relevance_score: 0.3
+
+# ── Portfolio Suggester ───────────────────────────────────────────────────────
+portfolio_suggester:
+  top_n_suggestions: 5
+  hni_min_ticket_lakh: 50
+  risk_grades:
+    - Conservative
+    - Balanced
+    - Aggressive
+  instrument_categories:
+    - Large Cap Equity
+    - Mid Cap Equity
+    - Debt Mutual Fund
+    - Government Securities
+    - Corporate Bonds
+    - REITs
+    - Gold ETF
+    - International Equity
+
+# ── Portfolio Diversifier ─────────────────────────────────────────────────────
+portfolio_diversifier:
+  thresholds:
+    max_sector_weight: 0.30
+    max_single_stock_weight: 0.15
+    max_geographic_concentration: 0.80
+  profile_limits:
+    Conservative:
+      max_equity_weight: 0.50
+      min_debt_weight: 0.40
+      max_alternatives_weight: 0.10
+    Balanced:
+      max_equity_weight: 0.70
+      min_debt_weight: 0.20
+      max_alternatives_weight: 0.15
+    Aggressive:
+      max_equity_weight: 0.90
+      min_debt_weight: 0.05
+      max_alternatives_weight: 0.25
+
+# ── API ───────────────────────────────────────────────────────────────────────
+api:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 1
+  reload: true
+
+# ── Observability ─────────────────────────────────────────────────────────────
+observability:
+  langfuse_enabled: false
+  otlp_enabled: false
+  otlp_endpoint: "http://localhost:4317"
+  prometheus_port: 9090

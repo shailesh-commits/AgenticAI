@@ -1,0 +1,102 @@
+[
+  {
+    "ticker": "RELIANCE",
+    "headline": "Reliance Industries Q1 FY26 net profit surges 18% YoY to ₹17,448 crore on Jio, Retail strength",
+    "trigger": "earnings",
+    "sentiment": "positive",
+    "score": 0.92,
+    "url": "https://www.moneycontrol.com/news/business/earnings/reliance-q1-fy26-results-mock",
+    "ts": "2026-06-09T06:30:00+05:30",
+    "source": "moneycontrol"
+  },
+  {
+    "ticker": "TCS",
+    "headline": "TCS wins $500M multi-year digital transformation contract with European banking consortium",
+    "trigger": "M&A",
+    "sentiment": "positive",
+    "score": 0.88,
+    "url": "https://news.google.com/rss/articles/tcs-contract-win-mock",
+    "ts": "2026-06-09T08:15:00+05:30",
+    "source": "google_news"
+  },
+  {
+    "ticker": "HDFCBANK",
+    "headline": "Macquarie upgrades HDFC Bank to Outperform; raises target price to ₹1,950 on NIM recovery thesis",
+    "trigger": "rating_change",
+    "sentiment": "positive",
+    "score": 0.85,
+    "url": "https://www.moneycontrol.com/news/business/stocks/hdfcbank-upgrade-mock",
+    "ts": "2026-06-09T09:00:00+05:30",
+    "source": "moneycontrol"
+  },
+  {
+    "ticker": "INFY",
+    "headline": "Infosys narrows FY26 revenue guidance to 4-7% in constant currency after weak Q1 deal wins",
+    "trigger": "earnings",
+    "sentiment": "negative",
+    "score": 0.78,
+    "url": "https://news.google.com/rss/articles/infy-guidance-cut-mock",
+    "ts": "2026-06-09T07:45:00+05:30",
+    "source": "google_news"
+  },
+  {
+    "ticker": "BAJFINANCE",
+    "headline": "Bajaj Finance AUM crosses ₹4 lakh crore milestone; asset quality stable at 1.1% GNPA",
+    "trigger": "earnings",
+    "sentiment": "positive",
+    "score": 0.87,
+    "url": "https://www.moneycontrol.com/news/business/stocks/bajfinance-aum-mock",
+    "ts": "2026-06-09T10:30:00+05:30",
+    "source": "moneycontrol"
+  },
+  {
+    "ticker": "SUNPHARMA",
+    "headline": "Sun Pharma receives USFDA approval for specialty dermatology drug; addressable market $2B",
+    "trigger": "macro",
+    "sentiment": "positive",
+    "score": 0.83,
+    "url": "https://news.google.com/rss/articles/sunpharma-fda-approval-mock",
+    "ts": "2026-06-08T22:00:00+05:30",
+    "source": "google_news"
+  },
+  {
+    "ticker": "TITAN",
+    "headline": "Titan Company Q1 jewellery revenue up 25% on strong wedding season demand; expands Zoya stores",
+    "trigger": "earnings",
+    "sentiment": "positive",
+    "score": 0.80,
+    "url": "https://www.moneycontrol.com/news/business/stocks/titan-q1-mock",
+    "ts": "2026-06-09T11:00:00+05:30",
+    "source": "moneycontrol"
+  },
+  {
+    "ticker": "WIPRO",
+    "headline": "Wipro announces 8,000 headcount reduction as part of AI-led efficiency transformation programme",
+    "trigger": "macro",
+    "sentiment": "negative",
+    "score": 0.71,
+    "url": "https://news.google.com/rss/articles/wipro-layoffs-mock",
+    "ts": "2026-06-09T13:00:00+05:30",
+    "source": "google_news"
+  },
+  {
+    "ticker": "ICICIBANK",
+    "headline": "ICICI Bank credit card market share rises to 17.5%; digital lending disbursals up 32% QoQ",
+    "trigger": "earnings",
+    "sentiment": "positive",
+    "score": 0.84,
+    "url": "https://www.moneycontrol.com/news/business/stocks/icicibank-card-share-mock",
+    "ts": "2026-06-09T12:00:00+05:30",
+    "source": "moneycontrol"
+  },
+  {
+    "ticker": "LT",
+    "headline": "L&T secures ₹12,500 crore infrastructure order from NHAI for 6-lane expressway project",
+    "trigger": "M&A",
+    "sentiment": "positive",
+    "score": 0.86,
+    "url": "https://www.moneycontrol.com/news/business/stocks/lt-order-win-mock",
+    "ts": "2026-06-09T14:30:00+05:30",
+    "source": "moneycontrol"
+  }
+]

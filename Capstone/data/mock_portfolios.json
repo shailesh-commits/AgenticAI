@@ -1,0 +1,57 @@
+[
+  {
+    "client_id": "HNI001",
+    "name": "Rajesh Kumar",
+    "risk_profile": "Balanced",
+    "total_value_lakh": 1500,
+    "liquidity_constraint_lakh": 200,
+    "exclusion_list": ["WIPRO"],
+    "holdings": [
+      {"ticker": "RELIANCE",    "sector": "Energy",           "asset_class": "Equity",     "geography": "India", "weight": 0.18, "value_lakh": 270},
+      {"ticker": "TCS",         "sector": "IT",               "asset_class": "Equity",     "geography": "India", "weight": 0.15, "value_lakh": 225},
+      {"ticker": "HDFCBANK",    "sector": "Banking & Finance", "asset_class": "Equity",    "geography": "India", "weight": 0.12, "value_lakh": 180},
+      {"ticker": "ICICIBANK",   "sector": "Banking & Finance", "asset_class": "Equity",    "geography": "India", "weight": 0.10, "value_lakh": 150},
+      {"ticker": "INFY",        "sector": "IT",               "asset_class": "Equity",     "geography": "India", "weight": 0.08, "value_lakh": 120},
+      {"ticker": "AXISBANK",    "sector": "Banking & Finance", "asset_class": "Equity",    "geography": "India", "weight": 0.07, "value_lakh": 105},
+      {"ticker": "HDFC_DEBT_FD","sector": "Debt",             "asset_class": "Debt MF",    "geography": "India", "weight": 0.15, "value_lakh": 225},
+      {"ticker": "SBI_GSEC",    "sector": "Government",       "asset_class": "G-Sec",      "geography": "India", "weight": 0.10, "value_lakh": 150},
+      {"ticker": "GOLD_ETF",    "sector": "Commodities",      "asset_class": "Gold ETF",   "geography": "Global","weight": 0.05, "value_lakh": 75}
+    ]
+  },
+  {
+    "client_id": "HNI002",
+    "name": "Priya Mehta",
+    "risk_profile": "Conservative",
+    "total_value_lakh": 3200,
+    "liquidity_constraint_lakh": 500,
+    "exclusion_list": [],
+    "holdings": [
+      {"ticker": "HDFCBANK",        "sector": "Banking & Finance","asset_class": "Equity",   "geography": "India", "weight": 0.12, "value_lakh": 384},
+      {"ticker": "NESTLEIND",       "sector": "FMCG",             "asset_class": "Equity",   "geography": "India", "weight": 0.08, "value_lakh": 256},
+      {"ticker": "KOTAKBANK",       "sector": "Banking & Finance","asset_class": "Equity",   "geography": "India", "weight": 0.08, "value_lakh": 256},
+      {"ticker": "HINDUNILVR",      "sector": "FMCG",             "asset_class": "Equity",   "geography": "India", "weight": 0.07, "value_lakh": 224},
+      {"ticker": "ICICI_CORP_BOND", "sector": "Corporate Bond",   "asset_class": "Corp Bond","geography": "India", "weight": 0.20, "value_lakh": 640},
+      {"ticker": "SBI_GSEC",        "sector": "Government",       "asset_class": "G-Sec",    "geography": "India", "weight": 0.25, "value_lakh": 800},
+      {"ticker": "HDFC_DEBT_FD",    "sector": "Debt",             "asset_class": "Debt MF",  "geography": "India", "weight": 0.15, "value_lakh": 480},
+      {"ticker": "GOLD_ETF",        "sector": "Commodities",      "asset_class": "Gold ETF", "geography": "Global","weight": 0.05, "value_lakh": 160}
+    ]
+  },
+  {
+    "client_id": "HNI003",
+    "name": "Anand Sharma",
+    "risk_profile": "Aggressive",
+    "total_value_lakh": 800,
+    "liquidity_constraint_lakh": 50,
+    "exclusion_list": ["NESTLEIND"],
+    "holdings": [
+      {"ticker": "RELIANCE",    "sector": "Energy",           "asset_class": "Equity",     "geography": "India", "weight": 0.22, "value_lakh": 176},
+      {"ticker": "TCS",         "sector": "IT",               "asset_class": "Equity",     "geography": "India", "weight": 0.18, "value_lakh": 144},
+      {"ticker": "BAJFINANCE",  "sector": "Banking & Finance","asset_class": "Equity",     "geography": "India", "weight": 0.15, "value_lakh": 120},
+      {"ticker": "TITAN",       "sector": "Consumer",         "asset_class": "Equity",     "geography": "India", "weight": 0.12, "value_lakh": 96},
+      {"ticker": "SUNPHARMA",   "sector": "Healthcare",       "asset_class": "Equity",     "geography": "India", "weight": 0.10, "value_lakh": 80},
+      {"ticker": "INFY",        "sector": "IT",               "asset_class": "Equity",     "geography": "India", "weight": 0.10, "value_lakh": 80},
+      {"ticker": "MARUTI",      "sector": "Auto",             "asset_class": "Equity",     "geography": "India", "weight": 0.08, "value_lakh": 64},
+      {"ticker": "HDFC_DEBT_FD","sector": "Debt",             "asset_class": "Debt MF",    "geography": "India", "weight": 0.05, "value_lakh": 40}
+    ]
+  }
+]
