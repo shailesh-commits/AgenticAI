@@ -44,7 +44,7 @@ AgenticAI/
 - **onedrive_connect.py** — Helper script for integrating an agent with OneDrive as a data/tool source.
 - **chroma_db/** — Local vector store used by the RAG modules.
 - **ebooks/** — Sample documents used as the knowledge base for RAG examples.
-- **Capstone/** — Supporting files for the capstone project.
+- **Capstone/** — A full multi-agent WAM (Wealth and Asset Management) Agentic Platform built with LangGraph: a lead-sourcing agent, an investment-suggestion agent, and a portfolio-diversification agent, orchestrated as a stateful graph and exposed via a FastAPI REST API. See Capstone/README.md for full details.
 
 ## Prerequisites
 
